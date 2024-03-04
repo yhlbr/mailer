@@ -75,33 +75,16 @@ Iterable<List<int>> split(List<int> data, int maxLength,
 Stream<List<int>> _splitS(
     Stream<List<int>> dataS, int splitOver, int maxLength) {
   var currentLineLength = 0;
-  var insertEol = false;
 
   var sc = StreamController<List<int>>();
   void processData(List<int> data) {
-    _logger.finest('_splitS: <- ${data.length} bytes  currentLineLength: $currentLineLength');
-    if (data.length + currentLineLength > maxLength) {
-      var targetLength = maxLength ~/ 2;
-      if (targetLength + currentLineLength > maxLength) {
-        targetLength = maxLength - currentLineLength;
+    var dataMut = data;
+    while(dataMut.length > 0) {
+      sc.add([dataMut.removeAt(0)]);
+      if (++currentLineLength >= splitOver) {
+        sc.add(eol8);
+        currentLineLength = 0;
       }
-      _logger.finest('_splitS: > maxLength ($maxLength) Splitting into $targetLength parts');
-      split(data, targetLength, avoidUtf8Cut: false).forEach(processData);
-    } else if (data.length + currentLineLength > splitOver) {
-      _logger.finest('_splitS: inside splitOver ($splitOver) and maxLength ($maxLength) window.');
-      // We are now over splitOver but not too long.  Perfect.
-      if (insertEol) sc.add(eol8);
-      sc.add(data);
-      currentLineLength = 0;
-      insertEol = true;
-    } else {
-      _logger.finest('_splitS: below splitOver ($splitOver).');
-      // We are still below splitOver
-      if (insertEol) sc.add(eol8);
-      insertEol = false;
-
-      sc.add(data);
-      currentLineLength += data.length;
     }
   }
 

@@ -203,8 +203,7 @@ Iterable<_IRHeader> _buildHeaders(Message message) {
 
   // Add all custom headers which are not in [noCustom].
   msgHeader.forEach((name, value) {
-    name = name.toLowerCase();
-    if (noCustom.contains(name)) return;
+    if (noCustom.contains(name.toLowerCase())) return;
 
     if (value is String && value.contains('@')) {
       headers.add(_IRHeaderAddress(name, Address(value)));
@@ -225,32 +224,28 @@ Iterable<_IRHeader> _buildHeaders(Message message) {
   });
 
   if (!msgHeader.containsKey('subject') && message.subject != null) {
-    headers.add(_IRHeaderText('subject', message.subject!));
+    headers.add(_IRHeaderText('Subject', message.subject!));
   }
 
   if (!msgHeader.containsKey('from')) {
-    headers.add(_IRHeaderAddress('from', message.fromAsAddress));
+    headers.add(_IRHeaderAddress('From', message.fromAsAddress));
   }
 
   if (!msgHeader.containsKey('to')) {
     var tos = message.recipientsAsAddresses;
-    if (tos.isNotEmpty) headers.add(_IRHeaderAddresses('to', tos));
+    if (tos.isNotEmpty) headers.add(_IRHeaderAddresses('To', tos));
   }
 
   if (!msgHeader.containsKey('cc')) {
     var ccs = message.ccsAsAddresses;
-    if (ccs.isNotEmpty) headers.add(_IRHeaderAddresses('cc', ccs));
+    if (ccs.isNotEmpty) headers.add(_IRHeaderAddresses('CC', ccs));
   }
 
   if (!msgHeader.containsKey('date')) {
-    headers.add(_IRHeaderDate('date', DateTime.now()));
+    headers.add(_IRHeaderDate('Date', DateTime.now()));
   }
 
-  if (!msgHeader.containsKey('x-mailer')) {
-    headers.add(_IRHeaderText('x-mailer', 'Dart Mailer library'));
-  }
-
-  headers.add(_IRHeaderText('mime-version', '1.0'));
+  headers.add(_IRHeaderText('MIME-Version', '1.0'));
 
   return headers;
 }

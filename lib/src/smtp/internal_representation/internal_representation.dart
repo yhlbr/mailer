@@ -17,8 +17,8 @@ part 'ir_message.dart';
 
 // "An 'encoded-word' may not be more than 75 characters long, including
 // 'charset', 'encoding', 'encoded-text', and delimiters."
-const maxEncodedLength = 75; // as per RFC2047
-const splitOverLength = 80;
+const maxEncodedLength = 76; // as per RFC2047
+const splitOverLength = 76;
 const maxLineLength = 800;
 
 // From https://docs.flutter.io/flutter/foundation/describeEnum.html

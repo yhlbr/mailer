@@ -153,17 +153,17 @@ class _IRContentAttachment extends _IRContent {
     final contentType = _attachment.contentType;
     final filename = _attachment.fileName;
 
-    _header.add(_IRHeaderText('content-type', contentType));
-    _header.add(_IRHeaderText('content-transfer-encoding', 'base64'));
+    _header.add(_IRHeaderText('Content-Type', contentType));
+    _header.add(_IRHeaderText('Content-Transfer-Encoding', 'base64'));
 
     if ((_attachment.cid ?? '').isNotEmpty) {
-      _header.add(_IRHeaderText('content-id', _attachment.cid!));
+      _header.add(_IRHeaderText('Content-ID', _attachment.cid!));
     }
 
     final parms = <String, String>{};
     if ((filename ?? '').isNotEmpty) parms['filename'] = filename!;
     _header.add(_IRHeaderText(
-        'content-disposition', _describeEnum(_attachment.location), parms));
+        'Content-Disposition', _describeEnum(_attachment.location), parms));
 
     // Add additional headers set by the user.
     for (final headerEntry in _attachment.additionalHeaders.entries) {
@@ -187,8 +187,8 @@ class _IRContentText extends _IRContent {
       String? text, _IRTextType textType, Iterable<_IRHeader> header) {
     _header.addAll(header);
     var type = _describeEnum(textType);
-    _header.add(_IRHeaderText('content-type', 'text/$type; charset=utf-8'));
-    _header.add(_IRHeaderText('content-transfer-encoding', 'base64'));
+    _header.add(_IRHeaderText('Content-Type', 'text/$type; charset=utf-8'));
+    _header.add(_IRHeaderText('Content-Transfer-Encoding', 'base64'));
 
     _text = text ?? '';
   }
