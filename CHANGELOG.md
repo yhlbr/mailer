@@ -1,6 +1,29 @@
+## 6.4.1
+* Fix dependency range for intl library.  
+  Thanks https://github.com/isoos and https://github.com/mnordine
+
+## 6.4.0
+* Switch to `^0.17` instead of range for the intl dependency.  
+  Thanks https://github.com/mnordine
+
+## 6.3.0
+* Allow mime 2.*
+
+## 6.2.0
+* Limit base64 encoded lines to 76 characters.
+  Thanks https://github.com/isoos
+
+## 6.1.2
+* Fix error code if recipients mail address is empty.  
+  Thanks https://github.com/amugofjava
+
+## 6.1.1
+* Close connections in finally block  
+  Thanks https://github.com/darkstarx
+
 ## 6.1.0
 * Add auth plain  
-  Thansk https://github.com/michep
+  Thanks https://github.com/michep
 * Allow `intl 0.19.0` as dependency
 
 ## 6.0.1
